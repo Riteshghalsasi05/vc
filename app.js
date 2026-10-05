@@ -86,7 +86,7 @@
 
   async function loadProfile(currentUser) {
     const data = await checked(client.from('profiles').select('*').eq('id', currentUser.id).maybeSingle());
-    if (!data) throw new Error('Supabase Auth accepted this account, but it has no row in public.profiles. Ask the admin to add it with the intended role (teacher, student, or admin).');
+    if (!data) throw new Error('Signed in, but this app cannot read the matching public.profiles row. Check that the profile id matches this Auth user and that authenticated users have SELECT permission under the profiles RLS policy. Your session is kept.');
     if (!['student', 'teacher', 'admin'].includes(data.role)) throw new Error('This account has no valid classroom role. Ask your administrator for access.');
     if (data.account_status === 'suspended') throw new Error('This classroom account is not active. Contact your administrator.');
     if (data.role === 'admin' && currentUser.email?.toLowerCase() !== (config.adminEmail || '').toLowerCase()) {
@@ -552,7 +552,6 @@
       if (memberProfile.role !== roleChoice) throw new Error('This account does not have access to that classroom. Choose the role assigned by your administrator.');
       await enterClassroom(data.user, memberProfile);
     } catch (profileError) {
-      await client.auth.signOut({ scope: 'local' });
       message.textContent = profileError.message || 'This account has not been added to the classroom.';
     }
   });
@@ -642,10 +641,10 @@
       if (!data.session) return;
       try { await enterClassroom(data.session.user, await loadProfile(data.session.user)); }
       catch (error) {
-        await client.auth.signOut({ scope: 'local' });
         setLoginRole(data.session.user.email?.toLowerCase() === (config.adminEmail || '').toLowerCase() ? 'admin' : 'student');
+        document.querySelector('#login-email').value = data.session.user.email || '';
         showView('login');
-        document.querySelector('#login-message').textContent = error.message || 'This account is not allowed into the classroom yet.';
+        document.querySelector('#login-message').textContent = `${error.message || 'This account is not allowed into the classroom yet.'} Your session is kept; fix the profile access and refresh.`;
       }
     });
     client.auth.onAuthStateChange((event, session) => {
