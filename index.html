@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7faf7">
+  <meta name="description" content="Sign in to Virtual Classroom to learn or teach.">
+  <title>Virtual Classroom</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <section id="home-view" class="home-view">
+    <header class="home-header">
+      <a href="#home" class="vc-brand"><span class="brand-icon">✿</span><span><strong>Virtual Classroom</strong><small>Learn · Grow · Learn</small></span></a>
+      <button class="top-login" data-login="student">↪ &nbsp; Login</button>
+    </header>
+    <main class="home-hero">
+      <div class="hero-copy">
+        <p class="hero-kicker">A PLACE TO LEARN TOGETHER</p>
+        <h1>Virtual Classroom</h1>
+        <div class="role-choices">
+          <button class="role-choice" data-login="student"><span>♟</span> Student Login</button>
+          <button class="role-choice teacher-choice" data-login="teacher"><span>♙</span> Teacher Login</button>
+          <button class="role-choice admin-choice" data-login="admin"><span>⌘</span> Admin Login</button>
+        </div>
+      </div>
+      <img class="hero-picture" src="assets/classroom-lesson.png" alt="A teacher and students learning together in a classroom">
+    </main>
+    <footer class="home-footer"><span>Learn at your own pace</span><span>Made for students and teachers</span></footer>
+  </section>
+
+  <main id="login-view" class="login-view" hidden>
+    <section class="login-card">
+      <a class="login-mark" href="#home" aria-label="Back to home">✿</a>
+      <h1>Welcome to Virtual Classroom</h1>
+      <p class="login-subtitle">Login to continue learning or teaching</p>
+      <div class="login-roles" role="group" aria-label="Sign in as">
+        <button type="button" data-role="student" class="login-role active">♟ &nbsp; Login as Student</button>
+        <button type="button" data-role="teacher" class="login-role">♙ &nbsp; Login as Teacher</button>
+        <button type="button" data-role="admin" class="login-role">⌘ &nbsp; Admin</button>
+      </div>
+      <p class="login-role-hint">Admin access uses the administrator email configured for this app.</p>
+      <form id="login-form">
+        <label for="login-email">Email / Username</label>
+        <input id="login-email" name="email" type="email" placeholder="you@example.com" autocomplete="username" required>
+        <label for="login-password">Password</label>
+        <input id="login-password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+        <button class="login-submit" type="submit">⇥ &nbsp; Login</button>
+        <p id="login-message" class="inline-message" aria-live="polite"></p>
+      </form>
+      <button class="back-home" data-home>‹ &nbsp; Back to Home</button>
+    </section>
+  </main>
+
+  <main id="app-view" class="app-view" hidden>
+    <aside class="sidebar">
+      <a href="#dashboard" class="vc-brand sidebar-brand"><span class="brand-icon">✿</span><span><strong>Virtual Classroom</strong><small id="sidebar-role">Student Portal</small></span></a>
+      <nav id="side-nav" class="side-nav" aria-label="Classroom navigation"></nav>
+      <div class="sidebar-user"><span id="user-initials" class="user-avatar">VC</span><span><strong id="user-name">Classroom User</strong><small id="user-role">Student</small></span></div>
+      <button id="logout-button" class="sidebar-logout">↪ &nbsp; Logout</button>
+    </aside>
+    <section class="workspace">
+      <header class="workspace-header"><div><span class="eyebrow">VIRTUAL CLASSROOM</span><h1 id="page-title">Dashboard</h1></div><span id="header-role" class="role-pill">Student</span></header>
+      <div id="page-content" class="page-content" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+</body>
+</html>

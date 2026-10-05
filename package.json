@@ -1,0 +1,9 @@
+{
+  "name": "meadow-virtual-classroom",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Meadow virtual classroom landing page",
+  "scripts": {
+    "dev": "node server.js"
+  }
+}

@@ -1,0 +1,4 @@
+project_id = "virtual-classroom"
+
+[functions.invite-member]
+verify_jwt = true
